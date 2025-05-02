@@ -1,4 +1,6 @@
 /*
+Problem Description
+
 You are in an infinite 2D grid where you can move in any of the 8 directions :
  (x,y) to
     (x+1, y),
@@ -13,14 +15,17 @@ You are given a sequence of points and the order in which you need to cover the 
 Give the minimum number of steps in which you can achieve it. You start from the first point.
 
 Problem Constraints
+
 1 <= |A| <= 106
 - 2 * 103 <= Ai, Bi <= 2 * 103
 |A| == |B|
 
 Input Format
+
 Given two integer arrays A and B, where A[i] is x coordinate and B[i] is y coordinate of ith point respectively.
 
 Output Format
+
 Return an Integer, i.e minimum number of steps.
 
 
@@ -30,8 +35,8 @@ Input 1:
  A = [0, 1, 1]
  B = [0, 1, 2]
 
-Output 1
- 2
+Output 1:
+2
 
 Explanation 1:
 Given three points are: (0, 0), (1, 1) and (1, 2).
