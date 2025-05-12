@@ -66,28 +66,38 @@ import java.util.TreeSet;
 
 public class MaxSumTriplet {
 
-    public int solve(int[] A) {
+    public int findMaxSumTriplet(int[] A) {
         int maxSum = 0, n = A.length;
-        int[] maxSuffixArray = new int[n];
-        maxSuffixArray[n-1] = A[n-1];
 
-        for (int i = n-2; i >= 0; i--) {
-            maxSuffixArray[i] = Math.max(maxSuffixArray[i+1], A[i]);
+        // Step 1: Build a suffix max array.
+        // maxSuffixArray[i] will store the maximum element from A[i] to A[n-1]
+        int[] maxSuffixArray = new int[n];
+        maxSuffixArray[n - 1] = A[n - 1];
+
+        for (int i = n - 2; i >= 0; i--) {
+            maxSuffixArray[i] = Math.max(maxSuffixArray[i + 1], A[i]);
         }
 
-        //TreeSet lower() -> Returns the greatest element in this set strictly less than the given element, or null if there is no such element.
+        // Step 2: Initialize a TreeSet to keep track of elements seen so far
+        // TreeSet allows for efficient lookup of the greatest element less than a given value
         TreeSet<Integer> set = new TreeSet<>();
-        set.add(Integer.MIN_VALUE); //to avoid null value if there is no number which is smaller than it
+        set.add(Integer.MIN_VALUE); // Added to prevent null return from set.lower()
 
-        for (int i = 0; i < n-1; i++) {
-            int first = set.lower(A[i]);
-            int second = A[i];
-            int third = maxSuffixArray[i+1];
+        // Step 3: Iterate through the array to find the maximum sum triplet (Ai < Aj < Ak)
+        for (int i = 0; i < n - 1; i++) {
+            int first = set.lower(A[i]);        // Largest value less than A[i] seen so far
+            int second = A[i];                  // Current element as the middle element of the triplet
+            int third = maxSuffixArray[i + 1];  // Maximum value to the right of A[i]
+
+            // Check if a valid triplet (in increasing order) is found
             if (first < second && second < third) {
                 maxSum = Math.max(maxSum, first + second + third);
             }
+
+            // Add current element to the set for future comparisons
             set.add(A[i]);
         }
+
         return maxSum;
     }
 

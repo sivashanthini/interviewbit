@@ -49,23 +49,38 @@ In the second configuration, there is no light which can light the first corrido
 package Array;
 
 public class MinLightsToActivate {
-    public int solve(int[] A, int B) {
-        int count = 0, n = A.length, i = 0;
-        while(i < n) {
+    public int findMinLightsToActivate(int[] A, int B) {
+        int count = 0;           // To count the number of lights activated
+        int n = A.length;        // Total number of positions
+        int i = 0;               // Current position being considered
+
+        while (i < n) {
+            // Determine the furthest possible light to the right within range
             int right = Math.min(i + B - 1, n - 1);
+
+            // Determine the leftmost position that can still cover position i
             int left = Math.max(i - B + 1, 0);
-            boolean flag = false;
+
+            boolean flag = false; // To check if a valid light is found in range
+
+            // Try to find a light (A[x] == 1) from right to left within [left, right]
             while (right >= left) {
                 if (A[right] == 1) {
-                    flag = true;
+                    flag = true; // Found a light that can cover position i
                     break;
                 }
-                right--;
+                right--; // Move left to find a light
             }
-            if (!flag) {return -1;}
-            count++;
-            i = right + B;
+
+            // If no light found that can cover the current position, return -1
+            if (!flag) {
+                return -1;
+            }
+
+            count++;           // Light is activated
+            i = right + B;     // Move to the next position that is not covered yet
         }
-        return count;
+
+        return count; // Return total lights activated
     }
 }

@@ -54,17 +54,29 @@ Once we find this, we simply subtract this from the total sum and this would be 
 package Array;
 
 public class PickFromBothSides {
-    public int solve(int[] A, int k) {
-        int total = 0, current = 0, maxSum = 0, n = A.length;
+    public int findMaxSumFromBothSides(int[] A, int k) {
+        int total = 0;        // Total sum of the array
+        int current = 0;      // Running sum of the sliding window
+        int maxSum = 0;       // Maximum sum of the subarray of length n - k (elements *not* picked)
+        int n = A.length;
+
+        // Step 1: Calculate the total sum and simultaneously find the max sum of a window of size (n - k)
         for (int i = 0; i < n; i++) {
-            total += A[i];
-            current += A[i];
-            if (i < (n-k)) maxSum += A[i];
-            else {
-                current -= A[i - (n-k)];
-                maxSum = Math.max(maxSum, current);
+            total += A[i];     // Update total sum
+            current += A[i];   // Add current element to the window sum
+
+            if (i < (n - k)) {
+                // For the first (n - k) elements, keep adding to maxSum
+                maxSum += A[i];
+            } else {
+                // Slide the window forward
+                current -= A[i - (n - k)];          // Remove the element leaving the window
+                maxSum = Math.max(maxSum, current); // Update maxSum if current is greater
             }
         }
+
+        // Step 2: Subtract the largest unpicked subarray sum from the total
+        // This gives the maximum sum by picking k elements from either end
         return total - maxSum;
     }
 }

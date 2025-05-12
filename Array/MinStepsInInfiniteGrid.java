@@ -51,9 +51,20 @@ package Array;
 public class MinStepsInInfiniteGrid {
     public int coverPoints(int[] A, int[] B) {
         int steps = 0;
+
+        // Loop through all pairs of consecutive points
         for (int i = 1; i < A.length; i++) {
-            steps += Math.max(Math.abs(A[i] - A[i-1]), Math.abs(B[i] - B[i-1])); // Chessboard distance
+            // Calculate the difference in x and y coordinates between two points
+            int dx = Math.abs(A[i] - A[i - 1]);
+            int dy = Math.abs(B[i] - B[i - 1]);
+
+            // The minimum number of steps to go from one point to the next
+            // is the maximum of dx and dy (diagonal movement allowed)
+            // This is known as "Chessboard distance" or King's move distance
+            steps += Math.max(dx, dy);
         }
-        return steps;
+
+        return steps; // Total steps needed to cover all points in order
     }
+
 }
